@@ -7,7 +7,9 @@ function CardPizza({ name, price, ingredients, img }) {
       <h2>Pizza {name}</h2>
       <div className="ingredients">
         <h3>Ingredientes:</h3>
-        <p>🍕 {ingredients.join(', ')}</p>
+        <ul>
+          {ingredients.map((ingredient) => <li key={ingredient}>🍕 {ingredient}</li>)}
+        </ul>
       </div>
       <div className="card-bottom">
         <p className="price">Precio: ${formatPrice(price)}</p>
