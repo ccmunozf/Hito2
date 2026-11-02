@@ -1,6 +1,6 @@
 ﻿# Pizzería Mamma Mía 🍕
 
-Proyecto educativo con React y Vite. El Hito 2 incorpora formularios de registro e inicio de sesión para practicar el estado y los eventos, conservando el catálogo del Hito 1.
+Proyecto educativo con React y Vite. Incluye el catálogo del Hito 1, los formularios del Hito 2 y la renderización dinámica y el carrito del Hito 3.
 
 ## Ejecutar el proyecto
 
@@ -53,11 +53,14 @@ src/
 │   ├── Header.jsx
 │   ├── Home.jsx
 │   ├── CardPizza.jsx
+│   ├── Cart.jsx           # Carrito con cantidades y total
 │   └── Footer.jsx
 ├── utils/
 │   ├── validateAuth.js    # Reglas de validación
+│   ├── cart.js            # Actualización de cantidades y total
 │   └── formatPrice.js
 ├── App.jsx
+├── pizzas.js             # Catálogo y carrito de ejemplo
 ├── App.css
 └── main.jsx
 ```
@@ -78,4 +81,26 @@ src/
 Este hito valida datos en el navegador. No crea cuentas reales, no autentica usuarios y no guarda contraseñas. Un mensaje de éxito significa que los datos cumplen las validaciones; no cambia el estado de sesión del menú.
 
 El total de $25.000 y los botones de carrito, detalle y añadir del Hito 1 siguen siendo elementos de presentación. Las imágenes de las pizzas requieren conexión a Internet.
-# Hito2
+
+## Hito 3: renderización dinámica y carrito
+
+- `src/pizzas.js` exporta `pizzas` (seis pizzas) y `pizzaCart` (tres pizzas con cantidad inicial de una unidad). **Son datos de ejemplo locales**, porque el archivo de apoyo original no estaba incluido junto al PDF. Las imágenes existentes se reutilizan como ilustraciones.
+- `Home` recorre `pizzas` con `map` y entrega las propiedades a `CardPizza`, con una clave estable por ID.
+- `CardPizza` recorre los ingredientes y muestra un elemento `li` por cada uno.
+- `Cart` importa `pizzaCart` e inicializa su estado con `useState`. Muestra imagen, nombre, precio unitario, cantidad y subtotal.
+- Los botones + y − actualizan las cantidades sin mutar los datos originales. Una pizza se elimina al llegar a cero.
+- El total se calcula sumando precio × cantidad. Un carrito vacío muestra $0 y deshabilita Pagar.
+- Pagar es un botón de presentación sin acción, tal como solicita la pauta.
+
+El carrito se muestra inicialmente. Para facilitar la revisión de todos los hitos, se conserva la navegación a Home, Login y Register en lugar de comentar sus componentes. El carrito permanece montado y conserva sus cantidades al cambiar de vista; al recargar la página vuelve a los datos iniciales. El botón superior con total de $25.000 permanece estático según la pauta; usa la opción **Carrito** para ver el pedido y su total calculado.
+
+### Comprobación del Hito 3
+
+1. Al abrir la aplicación, el carrito comienza con tres pizzas y total de $19.850.
+2. Aumenta Napolitana a dos unidades: su subtotal debe ser $11.900 y el total $25.800.
+3. Disminúyela a una unidad: el total vuelve a $19.850.
+4. Disminúyela nuevamente: se elimina la fila y el total queda en $13.900.
+5. Elimina las pizzas restantes: se muestra el estado vacío, total $0 y Pagar deshabilitado.
+6. Navega a Home: deben aparecer seis tarjetas y los ingredientes en listas.
+7. Vuelve a Carrito: se mantienen los cambios. Recarga para reiniciar el ejemplo.
+8. Comprueba que Login y Register siguen validando sus formularios.
