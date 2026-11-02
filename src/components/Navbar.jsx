@@ -1,6 +1,6 @@
 import { formatPrice } from '../utils/formatPrice'
 
-function Navbar() {
+function Navbar({ page, onNavigate }) {
   const total = 25000
   // Cambia a true para probar el menú de un usuario conectado.
   const token = false
@@ -9,7 +9,7 @@ function Navbar() {
     <nav className="navbar" aria-label="Navegación principal">
       <span className="brand">Pizzería Mamma Mía!</span>
       <div className="nav-links">
-        <button type="button">🍕 Home</button>
+        <button type="button" aria-current={page === 'home' ? 'page' : undefined} onClick={() => onNavigate('home')}>🍕 Home</button>
         {token ? (
           <>
             <button type="button">🔓 Profile</button>
@@ -17,8 +17,8 @@ function Navbar() {
           </>
         ) : (
           <>
-            <button type="button">🔐 Login</button>
-            <button type="button">🔐 Register</button>
+            <button type="button" aria-current={page === 'login' ? 'page' : undefined} onClick={() => onNavigate('login')}>🔐 Login</button>
+            <button type="button" aria-current={page === 'register' ? 'page' : undefined} onClick={() => onNavigate('register')}>🔐 Register</button>
           </>
         )}
       </div>
